@@ -16,33 +16,37 @@
       let wait = function (ms) {
         return new Promise(function (resolve, reject) {
           setTimeout(function () {
+            console.log(`wait ${ms}`);
             resolve(ms);
           }, ms)
         })
       }
 
-      wait(1000).then(function (data) {
-        console.log(`wait ${data}`);
-        return 'continue';
-      }).then(function (data) {
-        console.log(data);
-        console.log('end');
-      })
+      // wait(1000).then(function (data) {
+      //   return 2000; // 返回普通值
+      // }).then(function (data) {
+      //   return wait(data); // 返回 promise
+      // }).then(function (data) {
+      //   console.log('end');
+      // })
 
       // SimplePromise
       let wait2 = function (ms) {
         return new SimplePromise(function (resolve, reject) {
           setTimeout(function () {
+            console.log(`wait2 ${ms}`);
             resolve(ms);
           }, ms)
         })
       }
 
       wait2(1000).then(function (data) {
-        console.log(`wait2 ${data}`);
-        return 'continue';
+        console.log(1);
+        return 2000; // 返回普通值
       }).then(function (data) {
-        console.log(data);
+        console.log(2);
+        return wait2(data); // 返回 promise
+      }).then(function (data) {
         console.log('end2');
       })
 
