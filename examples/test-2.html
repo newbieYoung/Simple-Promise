@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>test promise 2</title>
+</head>
+
+<body>
+  <script src="../index.js"></script>
+  <script>
+    window.onload = function () {
+      // promise 同步异步
+
+      // ES6 Promise
+      // let ap = new Promise(function (resolve) {
+      //   console.log('1'); // 1
+      //   resolve();
+      // });
+      // console.log('2'); //2
+      // let bp = new Promise(function (resolve) {
+      //   console.log('3'); //3
+      // });
+
+      // ap.then(function (value) {
+      //   console.log('5'); //5
+      // });
+      // ap.then(function (value) {
+      //   console.log('6'); //6
+      // });
+
+      // console.log('4'); // 2
+
+      // SimplePromise
+      let ap = new SimplePromise(function (resolve) {
+        console.log('1'); // 1
+        resolve();
+      });
+      console.log('2'); //2
+      let bp = new SimplePromise(function (resolve) {
+        console.log('3'); //3
+      });
+
+      ap.then(function (value) {
+        console.log('5'); //5
+      });
+      ap.then(function (value) {
+        console.log('6'); //6
+      });
+
+      console.log('4'); // 2
+    }
+  </script>
+</body>
+
+</html>

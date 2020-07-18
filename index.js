@@ -97,26 +97,37 @@
     if (this.status !== PENDING) {
       return;
     }
-    this.status = FULFILLED;
-    this.value = data;
 
-    while (this.fulfilledList.length > 0) {
-      let run = this.fulfilledList.shift();
-      run(this.value);
+    let self = this;
+    let run = function () {
+      self.status = FULFILLED;
+      self.value = data;
+      while (self.fulfilledList.length > 0) {
+        let cb = self.fulfilledList.shift();
+        cb(self.value);
+      }
     }
+
+    setTimeout(run, 0) // 异步
   }
 
   SimplePromise.prototype.reject = function (err) {
     if (this.status !== PENDING) {
       return;
     }
-    this.status = REJECTED;
-    this.value = err;
 
-    while (this.rejectedList.length > 0) {
-      let run = this.rejectedList.shift();
-      run(this.value);
+    let self = this;
+    let run = function () {
+      self.status = REJECTED;
+      self.value = err;
+
+      while (self.rejectedList.length > 0) {
+        let cb = self.rejectedList.shift();
+        cb(self.value);
+      }
     }
+
+    setTimeout(run, 0) // 异步
   }
 
   return SimplePromise;
