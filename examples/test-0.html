@@ -8,9 +8,11 @@
 </head>
 
 <body>
+  <script src="../index.js"></script>
   <script>
     window.onload = function () {
 
+      // ES6 Promise
       let wait = function (ms) {
         return new Promise(function (resolve, reject) {
           setTimeout(function () {
@@ -21,6 +23,19 @@
 
       wait(1000).then(function (data) {
         console.log(`wait ${data}`);
+      })
+
+      // SimplePromise
+      let wait2 = function (ms) {
+        return new SimplePromise(function (resolve, reject) {
+          setTimeout(function () {
+            resolve(ms);
+          }, ms)
+        })
+      }
+
+      wait2(1000).then(function (data) {
+        console.log(`wait2 ${data}`);
       })
 
     }
