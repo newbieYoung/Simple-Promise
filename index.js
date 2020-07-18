@@ -44,8 +44,8 @@
     return new SimplePromise(function (resolve, reject) {
       let fulfilled = function (val) {
         try {
-          if (!isFunction(onFulfilled)) { //非函数
-            resolve(val) //立即执行
+          if (!isFunction(onFulfilled)) { //非函数立即执行下一个回调
+            resolve(val)
           } else {
             let res = onFulfilled(val);
             if (res instanceof SimplePromise) { //上一个回调返回 promise，则下一个回调必须等待其状态发生变换后才能执行
