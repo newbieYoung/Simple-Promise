@@ -16,13 +16,14 @@
       let wait = function (ms) {
         return new Promise(function (resolve, reject) {
           setTimeout(function () {
+            console.log(`wait ${ms}`);
             resolve(ms);
           }, ms)
         })
       }
 
       wait(1000).then(function (data) {
-        console.log(`wait ${data}`);
+        console.log(`then ${data}`)
       }).then(function (data) {
         console.log('end');
       })
@@ -31,13 +32,14 @@
       let wait2 = function (ms) {
         return new SimplePromise(function (resolve, reject) {
           setTimeout(function () {
+            console.log(`wait2 ${ms}`);
             resolve(ms);
           }, ms)
         })
       }
 
       wait2(1000).then(function (data) {
-        console.log(`wait2 ${data}`);
+        console.log(`then2 ${data}`)
       }).then(function (data) {
         console.log('end2');
       })
