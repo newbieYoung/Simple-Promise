@@ -108,7 +108,7 @@
       }
     }
 
-    setTimeout(run, 0) // 异步
+    setTimeout(run, 0) // promise 本身是同步的，但 then、catch 方法是异步的
   }
 
   SimplePromise.prototype.reject = function (err) {
