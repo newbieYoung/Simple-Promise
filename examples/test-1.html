@@ -23,7 +23,9 @@
 
       wait(1000).then(function (data) {
         console.log(`wait ${data}`);
+        return 'continue';
       }).then(function (data) {
+        console.log(data);
         console.log('end');
       })
 
@@ -38,7 +40,9 @@
 
       wait2(1000).then(function (data) {
         console.log(`wait2 ${data}`);
+        return 'continue';
       }).then(function (data) {
+        console.log(data);
         console.log('end2');
       })
 
