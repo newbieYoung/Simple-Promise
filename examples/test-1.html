@@ -11,7 +11,12 @@
   <script src="../index.js"></script>
   <script>
     window.onload = function () {
-      //promise resolve reject return
+      /**
+       * promise 回调返回值
+       * 返回普通值则立即执行下一个回调
+       * 返回 promise 则下一个回调必须等待其状态发生变换后才能执行
+       * 返回 普通方法 则下一个回调的参数为该方法的返回值
+       */
 
       // ES6 Promise
       let wait = function (ms) {
