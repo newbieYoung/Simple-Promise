@@ -78,7 +78,7 @@
 
       switch (self.status) {
         case PENDING:
-          self.fulfilledList.push(fulfilled); //新的 promise 和上一个 promise 相关联
+          self.fulfilledList.push(fulfilled); //then 返回的新 promise 和原有 promise 相关联
           self.rejectedList.push(rejected);
           break;
         case FULFILLED:
@@ -109,7 +109,7 @@
         }
       }
 
-      //如果 resolve 的参数为 Promise，则必须等待该 Promise 对象的状态改变后；当前 Promise 的状态才会改变，且当前 Promise 的状态取决于参数 Promise 的状态
+      //如果 resolve 的参数为 promise，则必须等待该 promise 对象的状态改变后；当前 promise 的状态才会改变，且当前 promise 的状态取决于参数 promise 的状态
       if (data instanceof SimplePromise) {
         data.then(function (value) {
           runFulfilled(value)
