@@ -94,18 +94,32 @@
   }
 
   SimplePromise.prototype.resolve = function (data) {
-    if (this.status !== PENDING) {
-      return;
-    }
-
     let self = this;
     let run = function () {
-      self.status = FULFILLED;
-      self.value = data;
-      while (self.fulfilledList.length > 0) {
-        let cb = self.fulfilledList.shift();
-        cb(self.value);
+      if (self.status != PENDING) {
+        return;
       }
+
+      let runFulfilled = function (val) {
+        self.status = FULFILLED;
+        self.value = val;
+        while (self.fulfilledList.length > 0) {
+          let cb = self.fulfilledList.shift();
+          cb(self.value);
+        }
+      }
+
+      //如果 resolve 的参数为 Promise，则必须等待该 Promise 对象的状态改变后；当前 Promise 的状态才会改变，且当前 Promise 的状态取决于参数 Promise 的状态
+      if (data instanceof SimplePromise) {
+        data.then(function (value) {
+          runFulfilled(value)
+        }, function (error) {
+          self.reject(error);
+        })
+      } else {
+        runFulfilled(data)
+      }
+
     }
 
     setTimeout(run, 0) // promise 本身是同步的，但 then、catch 方法是异步的

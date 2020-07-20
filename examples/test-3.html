@@ -13,28 +13,49 @@
     window.onload = function () {
       /**
        * promise 依赖
-       * 当 a promise 的 resolve、reject 将 b promise 当作参数，那么 a promise 的回调必须等待 b promise 的状态改变之后才能执行。
+       * 当 a promise 的 resolve 将 b promise 当作参数，那么 a promise 的回调必须等待 b promise 的状态改变之后才能执行。
        */
 
       //ES6 Promise
-      let ap = new Promise(function (resolve, reject) {
+      // let ap = new Promise(function (resolve, reject) {
+      //   setTimeout(function () {
+      //     console.log('wait 2000');
+      //     resolve()
+      //   }, 2000)
+      // })
+      // ap.then(function () {
+      //   console.log('then 2000');
+      // })
+
+      // let bp = new Promise(function (resolve, reject) {
+      //   setTimeout(function () {
+      //     console.log('wait 1000');
+      //     resolve(ap);
+      //   }, 1000)
+      // })
+      // bp.then(function () {
+      //   console.log('then 1000');
+      // })
+
+      //SimplePromise
+      let ap = new SimplePromise(function (resolve, reject) {
         setTimeout(function () {
-          console.log('wait 2000');
+          console.log('wait2 2000');
           resolve()
         }, 2000)
       })
       ap.then(function () {
-        console.log('then 2000');
+        console.log('then2 2000');
       })
 
-      let bp = new Promise(function (resolve, reject) {
+      let bp = new SimplePromise(function (resolve, reject) {
         setTimeout(function () {
-          console.log('wait 1000');
+          console.log('wait2 1000');
           resolve(ap);
         }, 1000)
       })
       bp.then(function () {
-        console.log('then 1000');
+        console.log('then2 1000');
       })
     }
   </script>
