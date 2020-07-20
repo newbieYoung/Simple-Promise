@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>test promise</title>
+</head>
+
+<body>
+  <script src="../index.js"></script>
+  <script>
+    window.onload = function () {
+      /**
+       * Promise 静态方法
+       * catch、resolve、reject、all、race
+       */
+
+      // ES6 Promise
+      // let wait = function (ms) {
+      //   return new Promise(function (resolve, reject) {
+      //     setTimeout(function () {
+      //       console.log(`wait ${ms}`);
+      //       resolve(ms);
+      //     }, ms)
+      //   })
+      // }
+      // Promise.all([wait(1000), wait(2000)]).then(function (data) {
+      //   console.log(data);
+      // })
+
+      // SimplePromise
+      let wait = function (ms) {
+        return new SimplePromise(function (resolve, reject) {
+          setTimeout(function () {
+            console.log(`wait ${ms}`);
+            resolve(ms);
+          }, ms)
+        })
+      }
+      SimplePromise.all([wait(1000), wait(2000)]).then(function (data) {
+        console.log(data);
+      })
+    }
+  </script>
+</body>
+
+</html>

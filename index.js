@@ -144,5 +144,66 @@
     setTimeout(run, 0) // 异步
   }
 
+
+  SimplePromise.prototype.catch = function (onRejected) {
+    this.then(null, onRejected);
+  }
+
+  SimplePromise.prototype.finally = function (callback) {
+    return this.then(function (data) {
+      callback()
+    }, function (err) {
+      callback()
+    })
+  }
+
+  SimplePromise.resolve = function (value) {
+    return new SimplePromise(function (resolve, reject) {
+      resolve(value)
+    })
+  }
+
+  SimplePromise.reject = function (err) {
+    return new SimplePromise(function (resolve, reject) {
+      reject(err);
+    })
+  }
+
+  SimplePromise.all = function (list) {
+    let self = this;
+    return new SimplePromise(function (resolve, reject) {
+      let values = [];
+      let count = 0;
+      for (let i = 0; i < list.length; i++) {
+        (function (index) {
+          self.resolve(list[index]).then(function (data) {
+            values[index] = data;
+            count++;
+            if (count == list.length) { //所有 promise 的状态都变为 fulfilled 时 整体状态才能变为 fulfilled
+              resolve(values);
+            }
+          }, function (err) { //有一个 promise 的状态变为 rejected ，那么整体状态也为 rejected
+            reject(err);
+          })
+        })(i)
+      }
+    })
+  }
+
+  SimplePromise.race = function (list) {
+    let self = this;
+    return new SimplePromise(function (resolve, reject) {
+      for (let i = 0; i < list.length; i++) {
+        (function (index) {
+          self.resolve(list[index]).then(function (data) { //只要有一个 promise 改变了状态，那么即认为整体状态发生了改变。
+            resolve(data);
+          }, function (err) {
+            reject(err)
+          })
+        })(i)
+      }
+    })
+  }
+
   return SimplePromise;
 })
